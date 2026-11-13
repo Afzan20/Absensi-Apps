@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6FAF7"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+        <!-- HEADER -->
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="←  Kembali"
+            android:textColor="#31A968"
+            android:textSize="14sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Manajemen Pegawai"
+            android:textColor="#24553A"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Kelola dan pantau informasi seluruh pegawai."
+            android:textColor="#89968E"
+            android:textSize="13sp"/>
+
+        <!-- TOTAL EMPLOYEES -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_login_card"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL DATA PEGAWAI"
+                android:textColor="#829087"
+                android:textSize="11sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="0 Pegawai"
+                android:textColor="#31A968"
+                android:textSize="26sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnAddEmployee"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_primary_button"
+            android:gravity="center"
+            android:text="+  Tambah Pegawai"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- SEARCH -->
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_input"
+            android:hint="Cari nama, NIP, atau departemen..."
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColor="#24553A"
+            android:textColorHint="#A2AEA6"
+            android:textSize="13sp"
+            android:singleLine="true"/>
+
+        <!-- LIST HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Daftar Pegawai"
+                android:textColor="#24553A"
+                android:textSize="17sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/btnRefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="↻ Muat Ulang"
+                android:textColor="#31A968"
+                android:textSize="12sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+        <!-- LOADING -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:indeterminateTint="#31A968"
+            android:visibility="gone"/>
+
+        <!-- ERROR MESSAGE -->
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textColor="#D34B4B"
+            android:textSize="13sp"
+            android:visibility="gone"/>
+
+        <!-- EMPTY MESSAGE -->
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:padding="25dp"
+            android:text="Belum ada data pegawai."
+            android:textColor="#89968E"
+            android:textSize="13sp"
+            android:visibility="gone"/>
+
+        <!-- DYNAMIC EMPLOYEE LIST -->
+        <LinearLayout
+            android:id="@+id/employeeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"/>
+
+        <!-- FOOTER -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="Absensi Apps © 2026"
+            android:textColor="#AAB6AE"
+            android:textSize="11sp"/>
+
+    </LinearLayout>
+
+</ScrollView>

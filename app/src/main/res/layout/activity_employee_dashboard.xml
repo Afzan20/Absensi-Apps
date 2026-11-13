@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6FAF7"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+        <!-- HEADER -->
+
+        <!-- TOP HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ABSENSI APPS"
+                android:textColor="#31A968"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:background="@drawable/bg_status_danger"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="↗ Logout"
+                android:textColor="#FF0000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Halo, Pegawai!"
+            android:textColor="#24553A"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvCurrentDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Rabu, 4 November 2026"
+            android:textColor="#89968E"
+            android:textSize="13sp"/>
+
+        <!-- ATTENDANCE CARD -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_login_card"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ABSENSI HARI INI"
+                android:textColor="#809087"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvAttendanceStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_status_pending"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="7dp"
+                android:text="Belum Absen"
+                android:textColor="#B17B19"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="--:--"
+                android:textColor="#24553A"
+                android:textSize="40sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waktu absensi masuk"
+                android:textColor="#89968E"
+                android:textSize="12sp"/>
+
+            <!-- CLOCK IN / OUT -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal"
+                android:background="#F5F9F6"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Masuk"
+                        android:textColor="#829087"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/tvClockIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="--:--"
+                        android:textColor="#24553A"
+                        android:textSize="17sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="#DCE8DF"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingStart="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Pulang"
+                        android:textColor="#829087"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/tvClockOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="--:--"
+                        android:textColor="#24553A"
+                        android:textSize="17sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ATTENDANCE BUTTON -->
+            <TextView
+                android:id="@+id/btnStartAttendance"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="23dp"
+                android:background="@drawable/bg_primary_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="◎  Mulai Absensi"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- LOCATION CARD -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Informasi Lokasi"
+            android:textColor="#24553A"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_login_card"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="17dp">
+
+            <TextView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="#E5F5EB"
+                android:gravity="center"
+                android:text="⌖"
+                android:textColor="#31A968"
+                android:textSize="25sp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="13dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lokasi GPS"
+                    android:textColor="#24553A"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvLocationStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Lokasi belum diperiksa"
+                    android:textColor="#89968E"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- OTHER FEATURES -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Aktivitas Saya"
+            android:textColor="#24553A"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <!-- HISTORY -->
+            <LinearLayout
+                android:id="@+id/cardHistory"
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_card"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="▤"
+                    android:textColor="#31A968"
+                    android:textSize="27sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="Riwayat Absensi"
+                    android:textColor="#24553A"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="13dp"
+                android:layout_height="1dp"/>
+
+            <!-- LEAVE -->
+            <LinearLayout
+                android:id="@+id/cardLeave"
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_card"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="▧"
+                    android:textColor="#31A968"
+                    android:textSize="27sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="Pengajuan Izin"
+                    android:textColor="#24553A"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- FOOTER -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="Absensi Apps © 2026"
+            android:textColor="#AAB6AE"
+            android:textSize="11sp"/>
+
+    </LinearLayout>
+
+</ScrollView>

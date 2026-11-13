@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6FAF7"
+    android:padding="20dp">
+
+    <!-- HEADER -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="←"
+            android:textColor="#24553A"
+            android:textSize="28sp"
+            android:paddingEnd="18dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ABSENSI APPS"
+                android:textColor="#31A968"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Scan Wajah"
+                android:textColor="#24553A"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- INSTRUCTION -->
+
+    <TextView
+        android:id="@+id/tvInstruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="Posisikan wajah Anda di tengah kamera."
+        android:textColor="#829087"
+        android:textSize="13sp"/>
+
+    <!-- CAMERA PREVIEW -->
+
+
+    <!-- CAMERA PREVIEW -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#183D2A">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:implementationMode="compatible"
+            app:scaleType="fillCenter"/>
+
+        <com.example.absensiapps.ui.employee.FaceLandmarkOverlay
+            android:id="@+id/faceLandmarkOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"/>
+
+    </FrameLayout>
+
+    <!-- CAMERA STATUS -->
+
+    <TextView
+        android:id="@+id/tvCameraStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Menunggu kamera..."
+        android:textColor="#829087"
+        android:textSize="13sp"
+        android:textStyle="bold"/>
+
+    <!-- FACE STATUS CARD -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/bg_login_card"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HASIL DETEKSI WAJAH"
+            android:textColor="#89968E"
+            android:textSize="11sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvFaceStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Wajah belum terdeteksi"
+            android:textColor="#D99B29"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <!-- CLOSE BUTTON -->
+
+    <TextView
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_status_danger"
+        android:gravity="center"
+        android:text="Tutup Kamera"
+        android:textColor="#BE4141"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"/>
+
+</LinearLayout>

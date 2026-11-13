@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6FAF7"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+
+        <!-- TOP HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ABSENSI APPS"
+                android:textColor="#31A968"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:background="@drawable/bg_status_danger"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="↗ Logout"
+                android:textColor="#FF0000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Halo, Admin!"
+            android:textColor="#24553A"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvCurrentDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Rabu, 4 November 2026"
+            android:textColor="#89968E"
+            android:textSize="13sp"/>
+
+        <!-- OVERVIEW TITLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Ringkasan Kehadiran"
+            android:textColor="#24553A"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <!-- STATISTIC ROW 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <!-- TOTAL EMPLOYEES -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="115dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_card"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Pegawai"
+                    android:textColor="#829087"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalEmployees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="--"
+                    android:textColor="#24553A"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pegawai terdaftar"
+                    android:textColor="#89968E"
+                    android:textSize="10sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="1dp"/>
+
+            <!-- PRESENT -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="115dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_card"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hadir Hari Ini"
+                    android:textColor="#829087"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tvPresent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="--"
+                    android:textColor="#31A968"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pegawai hadir"
+                    android:textColor="#89968E"
+                    android:textSize="10sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- STATISTIC ROW 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <!-- LATE -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="115dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_card"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terlambat"
+                    android:textColor="#829087"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tvLate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="--"
+                    android:textColor="#D99B29"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pegawai terlambat"
+                    android:textColor="#89968E"
+                    android:textSize="10sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="1dp"/>
+
+            <!-- LEAVE REQUEST -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="115dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_card"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pengajuan Izin"
+                    android:textColor="#829087"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tvLeaveRequests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="--"
+                    android:textColor="#D99B29"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Menunggu persetujuan"
+                    android:textColor="#89968E"
+                    android:textSize="10sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- MANAGEMENT MENU -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Manajemen"
+            android:textColor="#24553A"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <!-- EMPLOYEE MENU -->
+        <LinearLayout
+            android:id="@+id/cardEmployees"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_login_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="#E5F5EB"
+                android:gravity="center"
+                android:text="♙"
+                android:textColor="#31A968"
+                android:textSize="25sp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Pegawai"
+                    android:textColor="#24553A"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Kelola informasi seluruh pegawai"
+                    android:textColor="#89968E"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="›"
+                android:textColor="#31A968"
+                android:textSize="26sp"/>
+
+        </LinearLayout>
+
+        <!-- ATTENDANCE MENU -->
+        <LinearLayout
+            android:id="@+id/cardAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_login_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="#E5F5EB"
+                android:gravity="center"
+                android:text="▤"
+                android:textColor="#31A968"
+                android:textSize="25sp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Kehadiran"
+                    android:textColor="#24553A"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Pantau absensi seluruh pegawai"
+                    android:textColor="#89968E"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="›"
+                android:textColor="#31A968"
+                android:textSize="26sp"/>
+
+        </LinearLayout>
+
+        <!-- LEAVE MENU -->
+        <LinearLayout
+            android:id="@+id/cardLeave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_login_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="#FFF3D8"
+                android:gravity="center"
+                android:text="▧"
+                android:textColor="#D99B29"
+                android:textSize="25sp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pengajuan Izin"
+                    android:textColor="#24553A"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Periksa dan setujui pengajuan izin"
+                    android:textColor="#89968E"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="›"
+                android:textColor="#31A968"
+                android:textSize="26sp"/>
+
+        </LinearLayout>
+
+        <!-- REPORT MENU -->
+        <LinearLayout
+            android:id="@+id/cardReports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_login_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="#E5F5EB"
+                android:gravity="center"
+                android:text="▥"
+                android:textColor="#31A968"
+                android:textSize="25sp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Laporan Kehadiran"
+                    android:textColor="#24553A"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Lihat rekapitulasi kehadiran"
+                    android:textColor="#89968E"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="›"
+                android:textColor="#31A968"
+                android:textSize="26sp"/>
+
+        </LinearLayout>
+
+        <!-- RECENT ACTIVITY -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Aktivitas Kehadiran"
+            android:textColor="#24553A"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_login_card"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="▤"
+                android:textColor="#31A968"
+                android:textSize="32sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Belum ada data ditampilkan"
+                android:textColor="#24553A"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="Data aktivitas akan muncul setelah database absensi terhubung."
+                android:textColor="#89968E"
+                android:textSize="11sp"/>
+
+        </LinearLayout>
+
+        <!-- FOOTER -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="Absensi Apps © 2026"
+            android:textColor="#AAB6AE"
+            android:textSize="11sp"/>
+
+    </LinearLayout>
+
+</ScrollView>
