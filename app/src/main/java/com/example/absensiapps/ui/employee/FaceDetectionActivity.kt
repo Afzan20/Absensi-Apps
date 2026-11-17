@@ -9,9 +9,6 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
 import android.view.Surface
-import android.app.AlertDialog
-import android.widget.ImageView
-import android.view.ViewGroup
 
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -40,6 +37,7 @@ import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 
 import kotlin.math.sqrt
 
@@ -87,7 +85,14 @@ class FaceDetectionActivity : AppCompatActivity() {
     @Volatile
     private var activityDestroyed = false
 
-    private var embeddingTestCompleted = false
+    // 0 = tidak ada permintaan
+    // 1 = ambil wajah pertama
+    // 2 = ambil wajah kedua
+    private val captureRequest = AtomicInteger(0)
+
+    // Embedding sementara di memori
+    private var firstEmbedding: FloatArray? = null
+    private var secondEmbedding: FloatArray? = null
 
     private var lastAnalysisAtMs = 0L
 
@@ -250,6 +255,72 @@ class FaceDetectionActivity : AppCompatActivity() {
         binding.btnClose.setOnClickListener {
             finish()
         }
+
+        binding.btnCaptureFirst.setOnClickListener {
+
+            if (firstEmbedding != null) {
+                updateFaceStatus(
+                    "Wajah pertama sudah tersimpan.",
+                    Color.rgb(49, 169, 104)
+                )
+                return@setOnClickListener
+            }
+
+            requestFaceCapture(1)
+        }
+
+        binding.btnCaptureSecond.setOnClickListener {
+
+            if (firstEmbedding == null) {
+                updateFaceStatus(
+                    "Ambil wajah pertama terlebih dahulu.",
+                    Color.RED
+                )
+                return@setOnClickListener
+            }
+
+            if (secondEmbedding != null) {
+                updateFaceStatus(
+                    "Kedua embedding sudah tersedia.",
+                    Color.rgb(49, 169, 104)
+                )
+                return@setOnClickListener
+            }
+
+            requestFaceCapture(2)
+        }
+    }
+
+    private fun requestFaceCapture(slot: Int) {
+
+        if (faceEngine == null) {
+            updateFaceStatus(
+                "MobileFaceNet belum siap.",
+                Color.RED
+            )
+            return
+        }
+
+        if (!captureRequest.compareAndSet(0, slot)) {
+            updateFaceStatus(
+                "Tunggu proses pengambilan sebelumnya.",
+                Color.rgb(217, 155, 41)
+            )
+            return
+        }
+
+        val message = if (slot == 1) {
+            "Posisikan wajah untuk pengambilan pertama..."
+        } else {
+            "Posisikan wajah untuk pengambilan kedua..."
+        }
+
+        binding.tvInstruction.text = message
+
+        updateFaceStatus(
+            message,
+            Color.rgb(217, 155, 41)
+        )
     }
 
 
@@ -692,10 +763,6 @@ class FaceDetectionActivity : AppCompatActivity() {
 
         try {
 
-            // =====================================
-            // 1. GET LANDMARK POSITIONS
-            // =====================================
-
             val leftEye = face.getLandmark(
                 FaceLandmark.LEFT_EYE
             )?.position
@@ -716,24 +783,6 @@ class FaceDetectionActivity : AppCompatActivity() {
                 FaceLandmark.MOUTH_RIGHT
             )?.position
 
-
-            Log.d(
-                "FACE_TEST",
-                """
-                Landmark:
-                Left Eye  = ${leftEye != null}
-                Right Eye = ${rightEye != null}
-                Nose      = ${nose != null}
-                Mouth L   = ${mouthLeft != null}
-                Mouth R   = ${mouthRight != null}
-                """.trimIndent()
-            )
-
-
-            // =====================================
-            // 2. CHECK FIVE LANDMARKS
-            // =====================================
-
             if (
                 leftEye == null ||
                 rightEye == null ||
@@ -743,18 +792,12 @@ class FaceDetectionActivity : AppCompatActivity() {
             ) {
 
                 updateFaceStatus(
-                    "Landmark wajah belum lengkap. " +
-                            "Hadapkan wajah ke kamera.",
+                    "Landmark belum lengkap. Hadapkan wajah ke kamera.",
                     Color.rgb(217, 155, 41)
                 )
 
                 return
             }
-
-
-            // =====================================
-            // 3. SORT LANDMARKS
-            // =====================================
 
             val landmarks = listOf(
                 leftEye,
@@ -764,50 +807,149 @@ class FaceDetectionActivity : AppCompatActivity() {
                 mouthRight
             )
 
-            // Tampilkan lima titik landmark pada preview.
             binding.faceLandmarkOverlay.updateLandmarks(
                 landmarks,
                 bitmap.width,
                 bitmap.height
             )
 
-            Log.d(
-                "FACE_TEST",
-                "Five facial landmarks detected"
+            // Periksa apakah pengguna meminta pengambilan embedding.
+            val requestedSlot = captureRequest.get()
+
+            if (requestedSlot == 0) {
+                return
+            }
+
+            // Ambil permintaan agar tidak diproses berulang kali.
+            if (!captureRequest.compareAndSet(requestedSlot, 0)) {
+                return
+            }
+
+            updateFaceStatus(
+                "Memproses wajah ${requestedSlot}...",
+                Color.rgb(217, 155, 41)
             )
 
+            var alignedFace: Bitmap? = null
 
-            if (!embeddingTestCompleted) {
+            try {
 
-                // =====================================
-                // 5. FACE ALIGNMENT
-                // =====================================
-
-                val alignedFace = FaceAligner.align(
+                // Alignment wajah menjadi 112 x 112.
+                alignedFace = FaceAligner.align(
                     bitmap,
                     landmarks
                 )
 
-                // Tampilkan hasil alignment.
-                showAlignedFacePreview(alignedFace)
-
-                try {
-                    Log.d(
-                        "FACE_TEST",
-                        "Alignment successful: " +
-                                "${alignedFace.width}x${alignedFace.height}"
+                // Ekstraksi embedding MobileFaceNet.
+                val engine = faceEngine
+                    ?: throw IllegalStateException(
+                        "MobileFaceNet belum siap."
                     )
 
-                    // =====================================
-                    // 6. RUN FACE EMBEDDING
-                    // =====================================
+                val embedding = engine.extractEmbedding(
+                    alignedFace
+                )
 
-                    embeddingTestCompleted =
-                        runFaceEmbeddingTest(alignedFace)
+                check(embedding.size == 128) {
+                    "Dimensi embedding tidak sesuai."
+                }
 
-                } finally {
-                    if (!alignedFace.isRecycled) {
-                        alignedFace.recycle()
+                Log.d(
+                    "FACE_TEST",
+                    "Wajah $requestedSlot berhasil diambil"
+                )
+
+                Log.d(
+                    "FACE_TEST",
+                    "Embedding dimension: ${embedding.size}"
+                )
+
+                // Pindahkan hasil ke Main Thread.
+                runOnUiThread {
+
+                    if (
+                        activityDestroyed ||
+                        isFinishing ||
+                        isDestroyed
+                    ) {
+                        return@runOnUiThread
+                    }
+
+                    if (requestedSlot == 1) {
+
+                        firstEmbedding = embedding.copyOf()
+
+                        binding.btnCaptureFirst.isEnabled = false
+
+                        binding.btnCaptureFirst.text =
+                            "Wajah 1 Tersimpan"
+
+                        binding.btnCaptureFirst.backgroundTintList =
+                            android.content.res.ColorStateList.valueOf(
+                                Color.rgb(130, 144, 135)
+                            )
+
+                        binding.btnCaptureSecond.isEnabled = true
+
+                        binding.btnCaptureSecond.backgroundTintList =
+                            android.content.res.ColorStateList.valueOf(
+                                Color.rgb(49, 169, 104)
+                            )
+
+                        binding.tvInstruction.text =
+                            "Wajah pertama tersimpan. Ambil wajah kedua."
+
+                        updateFaceStatus(
+                            "Embedding pertama berhasil disimpan.\n" +
+                                    "Dimensi: ${embedding.size}",
+                            Color.rgb(49, 169, 104)
+                        )
+
+                    } else {
+
+                        secondEmbedding = embedding.copyOf()
+
+                        binding.btnCaptureSecond.isEnabled = false
+
+                        binding.btnCaptureSecond.text =
+                            "Wajah 2 Tersimpan"
+
+                        binding.tvInstruction.text =
+                            "Kedua wajah berhasil diambil."
+
+                        compareCapturedFaces()
+                    }
+                }
+
+            } catch (e: Exception) {
+
+                Log.e(
+                    "FACE_TEST",
+                    "Gagal mengambil embedding wajah $requestedSlot",
+                    e
+                )
+
+                // Jika gagal, pengguna boleh mencoba kembali.
+                runOnUiThread {
+
+                    if (
+                        !activityDestroyed &&
+                        !isFinishing &&
+                        !isDestroyed
+                    ) {
+
+                        updateFaceStatus(
+                            "Pengambilan gagal: ${e.message}. Coba lagi.",
+                            Color.RED
+                        )
+                    }
+                }
+
+            } finally {
+
+                alignedFace?.let {
+                    if (!it.isRecycled) {
+                        it.recycle()
                     }
                 }
             }
@@ -827,205 +969,105 @@ class FaceDetectionActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAlignedFacePreview(bitmap: Bitmap) {
+    private fun compareCapturedFaces() {
 
-        // Salin bitmap agar tidak ikut terhapus
-        // ketika bitmap asli selesai diproses.
-        val previewBitmap = bitmap.copy(
-            Bitmap.Config.ARGB_8888,
-            false
-        )
+        val first = firstEmbedding
+        val second = secondEmbedding
 
-        runOnUiThread {
-
-            if (activityDestroyed || isFinishing || isDestroyed) {
-                previewBitmap.recycle()
-                return@runOnUiThread
-            }
-
-            val imageView = ImageView(this).apply {
-                setImageBitmap(previewBitmap)
-
-                scaleType = ImageView.ScaleType.FIT_CENTER
-
-                layoutParams = ViewGroup.LayoutParams(
-                    600,
-                    600
-                )
-
-                adjustViewBounds = true
-
-                setPadding(20, 20, 20, 20)
-            }
-
-            val dialog = AlertDialog.Builder(this)
-                .setTitle("Hasil Face Alignment")
-                .setMessage(
-                    "Ukuran gambar: ${previewBitmap.width} x ${previewBitmap.height}"
-                )
-                .setView(imageView)
-                .setPositiveButton("Tutup", null)
-                .create()
-
-            dialog.setOnDismissListener {
-                imageView.setImageDrawable(null)
-
-                if (!previewBitmap.isRecycled) {
-                    previewBitmap.recycle()
-                }
-            }
-
-            dialog.show()
-        }
-    }
-
-
-    // =====================================
-    // RUN MOBILEFACENET EMBEDDING TEST
-    // =====================================
-
-    private fun runFaceEmbeddingTest(
-        alignedFace: Bitmap
-    ): Boolean {
-
-        return try {
-
-            // =====================================
-            // 1. CHECK ENGINE
-            // =====================================
-
-            val engine = faceEngine
-                ?: throw IllegalStateException(
-                    "MobileFaceNet belum diinisialisasi"
-                )
-
-
-            // =====================================
-            // 2. EXTRACT EMBEDDING
-            // =====================================
-
-            val embedding = engine.extractEmbedding(
-                alignedFace
-            )
-
-
-            // =====================================
-            // 3. CHECK EMBEDDING DIMENSION
-            // =====================================
-
-            check(embedding.size == 128) {
-                "Embedding harus memiliki 128 dimensi"
-            }
-
-
-            // =====================================
-            // 4. CALCULATE L2 NORM
-            // =====================================
-
-            val norm = sqrt(
-                embedding.sumOf {
-                    it.toDouble() * it.toDouble()
-                }
-            )
-
-
-            // =====================================
-            // 5. SELF COMPARISON
-            // =====================================
-
-            val comparison = engine.compareFaces(
-                firstFace = alignedFace,
-                secondFace = alignedFace
-            )
-
-
-            // =====================================
-            // 6. LOG RESULT
-            // =====================================
-
-            Log.d(
-                "FACE_TEST",
-                "================================"
-            )
-
-            Log.d(
-                "FACE_TEST",
-                "FACE ALIGNMENT: SUCCESS"
-            )
-
-            Log.d(
-                "FACE_TEST",
-                "Image: ${alignedFace.width}x${alignedFace.height}"
-            )
-
-            Log.d(
-                "FACE_TEST",
-                "Embedding dimension: ${embedding.size}"
-            )
-
-            Log.d(
-                "FACE_TEST",
-                "Embedding L2 norm: $norm"
-            )
-
-            Log.d(
-                "FACE_TEST",
-                "Self cosine similarity: ${comparison.cosineSimilarity}"
-            )
-
-            Log.d(
-                "FACE_TEST",
-                "Self angle: ${comparison.angleDegrees}"
-            )
-
-            Log.d(
-                "FACE_TEST",
-                "================================"
-            )
-
-
-            // =====================================
-            // 7. DISPLAY RESULT
-            // =====================================
-
-            val resultText = String.format(
-                Locale.US,
-                "INFERENCE BERHASIL\n\n" +
-                        "Face: 112 x 112\n" +
-                        "Embedding: %d dimensi\n" +
-                        "L2 Norm: %.4f\n" +
-                        "Similarity: %.4f\n" +
-                        "Angle: %.4f°",
-                embedding.size,
-                norm,
-                comparison.cosineSimilarity,
-                comparison.angleDegrees
-            )
+        if (first == null || second == null) {
 
             updateFaceStatus(
-                resultText,
-                Color.rgb(49, 169, 104)
-            )
-
-            true
-
-        } catch (e: Exception) {
-
-            Log.e(
-                "FACE_TEST",
-                "MobileFaceNet inference gagal",
-                e
-            )
-
-            updateFaceStatus(
-                "Inference gagal: ${e.message}",
+                "Embedding belum lengkap.",
                 Color.RED
             )
 
-            false
+            return
         }
-    }
 
+        if (first.size != second.size) {
+
+            updateFaceStatus(
+                "Dimensi embedding tidak sama.",
+                Color.RED
+            )
+
+            return
+        }
+
+        // Cosine similarity dari dua embedding.
+        var dotProduct = 0.0
+        var firstNorm = 0.0
+        var secondNorm = 0.0
+
+        for (i in first.indices) {
+
+            dotProduct += first[i].toDouble() *
+                    second[i].toDouble()
+
+            firstNorm += first[i].toDouble() *
+                    first[i].toDouble()
+
+            secondNorm += second[i].toDouble() *
+                    second[i].toDouble()
+        }
+
+        val denominator = sqrt(firstNorm * secondNorm)
+
+        if (denominator <= 0.0) {
+
+            updateFaceStatus(
+                "Embedding tidak valid.",
+                Color.RED
+            )
+
+            return
+        }
+
+        val similarity = dotProduct / denominator
+
+        Log.d(
+            "FACE_TEST",
+            "================================"
+        )
+
+        Log.d(
+            "FACE_TEST",
+            "FIRST EMBEDDING: ${first.size}"
+        )
+
+        Log.d(
+            "FACE_TEST",
+            "SECOND EMBEDDING: ${second.size}"
+        )
+
+        Log.d(
+            "FACE_TEST",
+            "COSINE SIMILARITY: $similarity"
+        )
+
+        Log.d(
+            "FACE_TEST",
+            "================================"
+        )
+
+        val result = String.format(
+            Locale.US,
+            "PERBANDINGAN BERHASIL\n\n" +
+                    "Embedding 1: %d dimensi\n" +
+                    "Embedding 2: %d dimensi\n\n" +
+                    "Cosine Similarity: %.4f\n\n" +
+                    "Skor berhasil dihitung.\n" +
+                    "Threshold pengenalan belum dikalibrasi.",
+            first.size,
+            second.size,
+            similarity
+        )
+
+        updateFaceStatus(
+            result,
+            Color.rgb(49, 169, 104)
+        )
+    }
 
     // =====================================
     // UPDATE FACE STATUS

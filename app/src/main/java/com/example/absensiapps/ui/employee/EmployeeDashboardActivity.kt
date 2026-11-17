@@ -155,7 +155,7 @@ class EmployeeDashboardActivity : AppCompatActivity() {
 
             val intent = Intent(
                 this,
-                FaceDetectionActivity::class.java
+                BiometricConsentActivity::class.java
             )
 
             startActivity(intent)

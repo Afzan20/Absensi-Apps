@@ -10,7 +10,6 @@
     android:padding="20dp">
 
     <!-- HEADER -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,11 +51,9 @@
                 android:textStyle="bold"/>
 
         </LinearLayout>
-
     </LinearLayout>
 
     <!-- INSTRUCTION -->
-
     <TextView
         android:id="@+id/tvInstruction"
         android:layout_width="match_parent"
@@ -68,16 +65,12 @@
         android:textSize="13sp"/>
 
     <!-- CAMERA PREVIEW -->
-
-
-    <!-- CAMERA PREVIEW -->
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="14dp"
         android:background="#183D2A">
 
         <androidx.camera.view.PreviewView
@@ -97,7 +90,6 @@
     </FrameLayout>
 
     <!-- CAMERA STATUS -->
-
     <TextView
         android:id="@+id/tvCameraStatus"
         android:layout_width="match_parent"
@@ -109,14 +101,13 @@
         android:textStyle="bold"/>
 
     <!-- FACE STATUS CARD -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/bg_login_card"
         android:orientation="vertical"
-        android:padding="18dp">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -130,22 +121,61 @@
             android:id="@+id/tvFaceStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:text="Wajah belum terdeteksi"
             android:textColor="#D99B29"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="bold"/>
 
     </LinearLayout>
 
-    <!-- CLOSE BUTTON -->
+    <!-- CAPTURE BUTTONS -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCaptureFirst"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:text="Ambil Wajah 1"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:enabled="true"
+            app:cornerRadius="12dp"
+            app:backgroundTint="#31A968"
+            android:textColor="#FFFFFF"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCaptureSecond"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:text="Ambil Wajah 2"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:enabled="false"
+            app:cornerRadius="12dp"
+            app:backgroundTint="#829087"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+    <!-- CLOSE BUTTON -->
     <TextView
         android:id="@+id/btnClose"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/bg_status_danger"
         android:gravity="center"
         android:text="Tutup Kamera"

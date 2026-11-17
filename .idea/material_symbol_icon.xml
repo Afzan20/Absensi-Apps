@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MaterialSymbolIconSettings">
+    <option name="appIconsFilePath" value="$PROJECT_DIR$/app/src/main/java/com/example/app/ui/theme/AppIcons.kt" />
+    <option name="composeDestinationPath" value="$PROJECT_DIR$/app/src/main/java/com/example/app/ui/theme/icons" />
+    <option name="composePackageName" value="com.example.app.ui.theme.icons" />
+    <option name="drawableDestinationPath" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+  </component>
+</project>

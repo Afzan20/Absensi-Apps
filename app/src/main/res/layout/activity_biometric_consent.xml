@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6FAF7"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Persetujuan Biometrik"
+            android:textColor="#24553A"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="32dp" />
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/ic_person"
+            android:contentDescription="Ilustrasi wajah"
+            app:tint="#31A968" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verifikasi Wajah"
+            android:textColor="#24553A"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Absensi Apps menggunakan teknologi pengenalan wajah untuk membantu memverifikasi identitas Anda saat melakukan absensi."
+            android:textColor="#555555"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginTop="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="18dp"
+            android:layout_marginTop="28dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Informasi Penggunaan Data"
+                android:textColor="#24553A"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Data biometrik digunakan untuk verifikasi identitas saat absensi.\n\n• Pemrosesan wajah dilakukan melalui sistem pengenalan wajah pada aplikasi.\n\n• Informasi penyimpanan, masa retensi, akses, dan penghapusan data harus dijelaskan oleh pengelola aplikasi sebelum persetujuan diberikan."
+                android:textColor="#555555"
+                android:textSize="14sp"
+                android:lineSpacingExtra="5dp"
+                android:layout_marginTop="12dp" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cbConsent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Saya telah membaca dan menyetujui penggunaan data biometrik untuk keperluan verifikasi absensi."
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:layout_marginTop="22dp"
+            android:buttonTint="#31A968" />
+
+        <Button
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="Setuju dan Lanjutkan"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#31A968"
+            android:enabled="false"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Kembali"
+            android:textAllCaps="false"
+            android:textColor="#24553A"
+            android:backgroundTint="#E5F2E9"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</ScrollView>

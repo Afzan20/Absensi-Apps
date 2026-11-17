@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AbsensiApps">
         <activity
+            android:name=".ui.employee.BiometricConsentActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.employee.FaceDetectionActivity"
             android:exported="false" />
         <activity
